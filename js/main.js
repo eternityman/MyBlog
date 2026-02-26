@@ -287,6 +287,49 @@ function initCustomBackground() {
   }
 }
 
+/* ── Avatar Configuration ──────────────────── */
+
+function initAvatar() {
+  if (typeof blogConfig === "undefined" || !blogConfig.avatarImage) return;
+
+  document.querySelectorAll(".hero-avatar, .about-avatar").forEach(function(img) {
+    img.src = blogConfig.avatarImage;
+  });
+}
+
+/* ── Custom Theme Colors ───────────────────── */
+
+function initCustomThemeColors() {
+  if (typeof blogConfig === "undefined") return;
+
+  var style = document.getElementById("custom-theme-style");
+  if (!style) {
+    style = document.createElement("style");
+    style.id = "custom-theme-style";
+    document.head.appendChild(style);
+  }
+
+  var css = "";
+
+  if (blogConfig.lightTheme && Object.keys(blogConfig.lightTheme).length) {
+    css += ":root {\n";
+    for (var key in blogConfig.lightTheme) {
+      css += "  " + key + ": " + blogConfig.lightTheme[key] + ";\n";
+    }
+    css += "}\n";
+  }
+
+  if (blogConfig.darkTheme && Object.keys(blogConfig.darkTheme).length) {
+    css += '[data-theme="dark"] {\n';
+    for (var key in blogConfig.darkTheme) {
+      css += "  " + key + ": " + blogConfig.darkTheme[key] + ";\n";
+    }
+    css += "}\n";
+  }
+
+  style.textContent = css;
+}
+
 /* ── Floating Effects ──────────────────────── */
 
 function initFloatingEffects() {
@@ -361,6 +404,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initStats();
   markActiveNavLink();
   initAvatarInteraction();
+  initAvatar();
+  initCustomThemeColors();
   initCustomBackground();
   initFloatingEffects();
 });

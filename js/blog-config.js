@@ -6,6 +6,13 @@
 
 const blogConfig = {
   /**
+   * Avatar image URL.
+   * Set to a local path (e.g. "assets/images/avatar.jpg") or a remote URL.
+   * Leave empty to use the default GitHub avatar placeholder.
+   */
+  avatarImage: "",
+
+  /**
    * Custom background image URL.
    * Set to "" to use the default gradient background.
    * Example: "https://example.com/bg.jpg" or "assets/images/bg.jpg"
@@ -61,5 +68,23 @@ const blogConfig = {
   /**
    * Interval in milliseconds between spawning new floating items.
    */
-  floatingSpawnInterval: 2000
+  floatingSpawnInterval: 2000,
+
+  /**
+   * Custom theme colors.
+   * Override any CSS variable for light or dark themes.
+   * Leave empty objects {} to use default theme colors.
+   *
+   * Available variables:
+   *   --primary, --primary-dark, --primary-light, --accent,
+   *   --bg, --bg-secondary, --bg-card, --bg-nav,
+   *   --text, --text-secondary, --text-muted,
+   *   --border, --border-light
+   *
+   * Example:
+   *   lightTheme: { "--primary": "#e74c3c", "--accent": "#2ecc71" },
+   *   darkTheme:  { "--primary": "#ff6b6b", "--bg": "#1e1e2e" }
+   */
+  lightTheme: {},
+  darkTheme: {}
 };
