@@ -126,7 +126,7 @@ function renderSearchResults(results, container) {
     return;
   }
   const html = results.map(p => `
-    <a class="search-result-item" href="post.html?id=${p.id}">
+    <a class="search-result-item" href="post.html?slug=${p.folder}">
       <div class="result-title">${p.title}</div>
       <div class="result-meta">${p.date} · ${p.category} · ${p.tags.join(", ")}</div>
     </a>
@@ -259,6 +259,96 @@ function initAvatarInteraction() {
   });
 }
 
+/* ── Custom Background ─────────────────────── */
+
+function initCustomBackground() {
+  if (typeof blogConfig === "undefined") return;
+
+  if (blogConfig.backgroundImage) {
+    const overlay = document.createElement("div");
+    overlay.className = "custom-bg-overlay";
+    overlay.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-image: url('${blogConfig.backgroundImage}');
+      background-size: cover; background-position: center; background-attachment: fixed;
+      z-index: -2; pointer-events: none;
+    `;
+    document.body.appendChild(overlay);
+
+    const dim = document.createElement("div");
+    dim.className = "custom-bg-dim";
+    dim.style.cssText = `
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg);
+      opacity: ${blogConfig.backgroundOverlay};
+      z-index: -1; pointer-events: none;
+    `;
+    document.body.appendChild(dim);
+  }
+}
+
+/* ── Floating Effects ──────────────────────── */
+
+function initFloatingEffects() {
+  if (typeof blogConfig === "undefined" || !blogConfig.enableFloatingEffects) return;
+
+  const items = blogConfig.floatingItems;
+  if (!items || !items.length) return;
+
+  const container = document.createElement("div");
+  container.className = "floating-container";
+  document.body.appendChild(container);
+
+  const maxCount = blogConfig.floatingMaxCount || 15;
+  const [minDur, maxDur] = blogConfig.floatingDuration || [8, 18];
+  const [minOpacity, maxOpacity] = blogConfig.floatingOpacity || [0.15, 0.5];
+  const spawnInterval = blogConfig.floatingSpawnInterval || 2000;
+
+  function createFloatingItem() {
+    if (container.children.length >= maxCount) return;
+
+    const item = items[Math.floor(Math.random() * items.length)];
+    const el = document.createElement("span");
+    el.className = "floating-item";
+
+    if (item.type === "image") {
+      const img = document.createElement("img");
+      img.src = item.content;
+      img.alt = "";
+      img.style.width = (item.size || 40) + "px";
+      img.style.height = (item.size || 40) + "px";
+      img.style.objectFit = "contain";
+      el.appendChild(img);
+    } else {
+      el.textContent = item.content;
+      el.style.fontSize = (item.size || 1.2) + "rem";
+    }
+
+    const duration = minDur + Math.random() * (maxDur - minDur);
+    const startX = Math.random() * 100;
+    const drift = (Math.random() - 0.5) * 30;
+
+    el.style.setProperty("--float-duration", duration + "s");
+    el.style.setProperty("--float-start-x", startX + "vw");
+    el.style.setProperty("--float-drift", drift + "vw");
+    el.style.opacity = (minOpacity + Math.random() * (maxOpacity - minOpacity)).toFixed(2);
+
+    container.appendChild(el);
+
+    setTimeout(() => {
+      if (el.parentNode) el.remove();
+    }, duration * 1000);
+  }
+
+  // Create initial batch
+  for (let i = 0; i < Math.min(8, maxCount); i++) {
+    setTimeout(createFloatingItem, i * 600);
+  }
+
+  // Continuously spawn
+  setInterval(createFloatingItem, spawnInterval);
+}
+
 /* ── Init ──────────────────────────────────── */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -271,4 +361,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initStats();
   markActiveNavLink();
   initAvatarInteraction();
+  initCustomBackground();
+  initFloatingEffects();
 });
