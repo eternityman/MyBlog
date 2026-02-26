@@ -242,6 +242,8 @@ function initAvatarInteraction() {
     const cy = rect.top + rect.height / 2;
     const emojis = ["✨", "🎉", "💫", "⭐", "🌟", "🚀", "❤️", "🎈"];
 
+    const PARTICLE_DURATION = 900;
+
     for (let i = 0; i < 8; i++) {
       const particle = document.createElement("span");
       particle.className = "avatar-particle";
@@ -252,7 +254,7 @@ function initAvatarInteraction() {
       particle.style.setProperty("--dx", Math.cos(angle) * 80 + "px");
       particle.style.setProperty("--dy", Math.sin(angle) * 80 + "px");
       document.body.appendChild(particle);
-      setTimeout(() => particle.remove(), 900);
+      setTimeout(() => particle.remove(), PARTICLE_DURATION);
     }
   });
 }
