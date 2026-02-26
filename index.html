@@ -128,6 +128,7 @@
 
   <!-- ===== SCRIPTS ===== -->
   <script src="assets/vendor/highlight.min.js"></script>
+  <script src="js/blog-config.js"></script>
   <script src="js/posts.js"></script>
   <script src="js/main.js"></script>
   <script src="js/router.js"></script>
@@ -145,7 +146,7 @@
           const modifiedHtml = p.lastModified && p.lastModified !== p.date
             ? `<span>✏️ ${p.lastModified}</span>` : "";
           return `
-          <article class="post-card fade-in" onclick="location.href='post.html?id=${p.id}'">
+          <article class="post-card fade-in" onclick="location.href='post.html?slug=${p.folder}'">
             <span class="card-category">${p.category}</span>
             <h2 class="card-title">${p.title}</h2>
             <p class="card-excerpt">${p.excerpt}</p>

@@ -4,7 +4,7 @@
  * Reads the `posts` array from posts.js (must be loaded first).
  *
  * Pages:
- *  post.html?id=<n>  → renderPostPage()
+ *  post.html?slug=<folder>  → renderPostPage()
  *  archives.html     → renderArchivesPage()
  *  categories.html   → renderCategoriesPage()
  *  tags.html         → renderTagsPage()
@@ -37,12 +37,12 @@ function catIcon(cat) { return CAT_ICONS[cat] || "📌"; }
 /* ── Post Page ────────────────────────────────── */
 
 /**
- * Load and render a single post by id.
+ * Load and render a single post by slug (folder name) or legacy numeric id.
  * Content is fetched from posts/<folder>/content.html.
  * Called when post.html is open.
  */
-async function loadPost(id) {
-  const post = posts.find(p => p.id === Number(id));
+async function loadPost(slug) {
+  const post = posts.find(p => p.folder === slug) || posts.find(p => p.id === Number(slug));
   const contentEl = document.getElementById("post-content");
 
   if (!post || !contentEl) {
@@ -161,12 +161,12 @@ function buildPostNav(post) {
 
   navEl.innerHTML = `
     ${prev ? `
-      <a class="post-nav-item prev" href="post.html?id=${prev.id}">
+      <a class="post-nav-item prev" href="post.html?slug=${prev.folder}">
         <div class="post-nav-label">← 上一篇</div>
         <div class="post-nav-title">${esc(prev.title)}</div>
       </a>` : `<div></div>`}
     ${next ? `
-      <a class="post-nav-item next" href="post.html?id=${next.id}">
+      <a class="post-nav-item next" href="post.html?slug=${next.folder}">
         <div class="post-nav-label">下一篇 →</div>
         <div class="post-nav-title">${esc(next.title)}</div>
       </a>` : `<div></div>`}
@@ -175,8 +175,8 @@ function buildPostNav(post) {
 
 /** Entry point for post.html */
 function renderPostPage() {
-  const id = getParam("id");
-  if (id) loadPost(id);
+  const slug = getParam("slug") || getParam("id");
+  if (slug) loadPost(slug);
 }
 
 /* ── Archives Page ────────────────────────────── */
@@ -207,7 +207,7 @@ function renderArchivesPage() {
           .map(p => `
             <div class="timeline-post">
               <span class="timeline-date">${p.date.slice(5)}</span>
-              <a href="post.html?id=${p.id}">${esc(p.title)}</a>
+              <a href="post.html?slug=${p.folder}">${esc(p.title)}</a>
               <span class="timeline-post-cat">${esc(p.category)}</span>
             </div>
           `).join("")}
@@ -267,7 +267,7 @@ function renderCategoriesPage() {
           <div class="category-post-list">
             ${catPosts.sort((a, b) => b.date.localeCompare(a.date)).map(p => `
               <div class="category-post-item">
-                <a href="post.html?id=${p.id}">${esc(p.title)}</a>
+                <a href="post.html?slug=${p.folder}">${esc(p.title)}</a>
                 <time>${p.date}</time>
               </div>
             `).join("")}
@@ -329,7 +329,7 @@ function renderTagsPage() {
           <div class="category-post-list">
             ${tagPosts.sort((a, b) => b.date.localeCompare(a.date)).map(p => `
               <div class="category-post-item">
-                <a href="post.html?id=${p.id}">${esc(p.title)}</a>
+                <a href="post.html?slug=${p.folder}">${esc(p.title)}</a>
                 <time>${p.date}</time>
               </div>
             `).join("")}
