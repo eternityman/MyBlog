@@ -80,10 +80,22 @@ async function loadPost(slug) {
       </div>`;
   }
 
-  // Load article content: prefer inline JS content, fall back to fetch
+  // Load article content.
+  // Strategy: use inline JS content (from posts-content.js) first — works on
+  // both http:// and file:// protocols.  Fall back to fetch() for posts not
+  // yet in the inline map (fetch only works over http:// / https://).
   const inlineContent = typeof postsContent !== "undefined" && postsContent[post.folder];
   if (inlineContent) {
     contentEl.innerHTML = inlineContent;
+  } else if (location.protocol === "file:") {
+    // fetch() does not work with file:// in most browsers (CORS restriction).
+    // Show a helpful message instead of a cryptic network error.
+    contentEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">😕</div>
+        <p class="empty-state-text">本地打开时该文章内容不可用，请将文章内容添加到 posts-content.js，或通过 HTTP 服务器访问。<br><a href="index.html">返回首页</a></p>
+      </div>`;
+    return;
   } else {
     try {
       const res = await fetch(`posts/${post.folder}/content.html`);
