@@ -80,18 +80,23 @@ async function loadPost(slug) {
       </div>`;
   }
 
-  // Fetch article content from the post's own folder
-  try {
-    const res = await fetch(`posts/${post.folder}/content.html`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    contentEl.innerHTML = await res.text();
-  } catch {
-    contentEl.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">😕</div>
-        <p class="empty-state-text">文章内容加载失败，<a href="index.html">返回首页</a></p>
-      </div>`;
-    return;
+  // Load article content: prefer inline JS content, fall back to fetch
+  const inlineContent = typeof postsContent !== "undefined" && postsContent[post.folder];
+  if (inlineContent) {
+    contentEl.innerHTML = inlineContent;
+  } else {
+    try {
+      const res = await fetch(`posts/${post.folder}/content.html`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      contentEl.innerHTML = await res.text();
+    } catch {
+      contentEl.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">😕</div>
+          <p class="empty-state-text">文章内容加载失败，<a href="index.html">返回首页</a></p>
+        </div>`;
+      return;
+    }
   }
 
   // Syntax highlighting (if highlight.js is loaded)

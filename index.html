@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="css/style.css" />
   <!-- highlight.js (vendored locally) -->
   <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css" />
+  <!-- Apply saved theme immediately to prevent flash of white in dark mode -->
+  <script>
+    (function() {
+      var t = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
 </head>
 <body>
 
