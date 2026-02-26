@@ -68,6 +68,9 @@
     </div>
   </section>
 
+  <!-- Section divider -->
+  <div class="section-divider"></div>
+
   <!-- ===== STATS BAR ===== -->
   <div class="stats-bar">
     <div class="stats-grid">
@@ -90,6 +93,9 @@
     </div>
   </div>
 
+  <!-- Section divider -->
+  <div class="section-divider-wave"></div>
+
   <!-- ===== MAIN CONTENT ===== -->
   <main class="main-content">
     <div class="container">
@@ -101,6 +107,9 @@
       </div>
     </div>
   </main>
+
+  <!-- Section divider -->
+  <div class="section-divider"></div>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
@@ -132,7 +141,10 @@
       grid.innerHTML = posts
         .slice()
         .sort((a, b) => b.date.localeCompare(a.date))
-        .map(p => `
+        .map(p => {
+          const modifiedHtml = p.lastModified && p.lastModified !== p.date
+            ? `<span>✏️ ${p.lastModified}</span>` : "";
+          return `
           <article class="post-card fade-in" onclick="location.href='post.html?id=${p.id}'">
             <span class="card-category">${p.category}</span>
             <h2 class="card-title">${p.title}</h2>
@@ -140,6 +152,7 @@
             <div class="card-footer">
               <div class="card-meta">
                 <span>📅 ${p.date}</span>
+                ${modifiedHtml}
                 <span>⏱️ ${p.readTime} 分钟</span>
               </div>
               <div class="card-tags">
@@ -147,7 +160,7 @@
               </div>
             </div>
           </article>
-        `).join("");
+        `}).join("");
     })();
   </script>
 

@@ -38,9 +38,10 @@ function catIcon(cat) { return CAT_ICONS[cat] || "📌"; }
 
 /**
  * Load and render a single post by id.
+ * Content is fetched from posts/<folder>/content.html.
  * Called when post.html is open.
  */
-function loadPost(id) {
+async function loadPost(id) {
   const post = posts.find(p => p.id === Number(id));
   const contentEl = document.getElementById("post-content");
 
@@ -58,6 +59,11 @@ function loadPost(id) {
   // Page title
   document.title = `${post.title} - EternityBlog`;
 
+  // Build last-modified display
+  const modifiedHtml = post.lastModified && post.lastModified !== post.date
+    ? `<span>✏️ 最后修改：${esc(post.lastModified)}</span>`
+    : "";
+
   // Post header
   const header = document.getElementById("post-header");
   if (header) {
@@ -65,7 +71,8 @@ function loadPost(id) {
       <span class="post-category">${esc(post.category)}</span>
       <h1>${esc(post.title)}</h1>
       <div class="post-meta">
-        <span>📅 ${esc(post.date)}</span>
+        <span>📅 发表于 ${esc(post.date)}</span>
+        ${modifiedHtml}
         <span>⏱️ 约 ${post.readTime} 分钟阅读</span>
       </div>
       <div class="post-tags">
@@ -73,8 +80,19 @@ function loadPost(id) {
       </div>`;
   }
 
-  // Article content
-  contentEl.innerHTML = post.content;
+  // Fetch article content from the post's own folder
+  try {
+    const res = await fetch(`posts/${post.folder}/content.html`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    contentEl.innerHTML = await res.text();
+  } catch {
+    contentEl.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">😕</div>
+        <p class="empty-state-text">文章内容加载失败，<a href="index.html">返回首页</a></p>
+      </div>`;
+    return;
+  }
 
   // Syntax highlighting (if highlight.js is loaded)
   if (window.hljs) {

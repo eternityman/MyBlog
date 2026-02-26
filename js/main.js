@@ -223,6 +223,40 @@ function markActiveNavLink() {
   });
 }
 
+/* ── Avatar Interaction ─────────────────────── */
+
+function initAvatarInteraction() {
+  const avatar = document.querySelector(".hero-avatar");
+  if (!avatar) return;
+
+  avatar.style.cursor = "pointer";
+
+  avatar.addEventListener("click", (e) => {
+    // Spin animation
+    avatar.classList.add("avatar-spin");
+    setTimeout(() => avatar.classList.remove("avatar-spin"), 800);
+
+    // Create floating particles
+    const rect = avatar.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const emojis = ["✨", "🎉", "💫", "⭐", "🌟", "🚀", "❤️", "🎈"];
+
+    for (let i = 0; i < 8; i++) {
+      const particle = document.createElement("span");
+      particle.className = "avatar-particle";
+      particle.textContent = emojis[i % emojis.length];
+      particle.style.left = cx + "px";
+      particle.style.top = cy + "px";
+      const angle = (Math.PI * 2 / 8) * i;
+      particle.style.setProperty("--dx", Math.cos(angle) * 80 + "px");
+      particle.style.setProperty("--dy", Math.sin(angle) * 80 + "px");
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 900);
+    }
+  });
+}
+
 /* ── Init ──────────────────────────────────── */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -234,4 +268,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initProgressBar();
   initStats();
   markActiveNavLink();
+  initAvatarInteraction();
 });
