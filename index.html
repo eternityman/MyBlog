@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EternityBlog - 热爱技术，享受编码的乐趣" />
+  <title>EternityBlog - 首页</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- highlight.js (vendored locally) -->
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="container">
+      <a class="nav-brand" href="index.html">✨ EternityBlog</a>
+
+      <div class="nav-links">
+        <a href="index.html" class="active">首页</a>
+        <a href="archives.html">归档</a>
+        <a href="categories.html">分类</a>
+        <a href="tags.html">标签</a>
+        <a href="about.html">关于</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="search-toggle" class="btn-icon" title="搜索" aria-label="搜索">🔍</button>
+        <button id="theme-toggle" class="btn-icon" title="切换主题" aria-label="切换主题">🌙</button>
+        <button class="hamburger" aria-label="菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile navigation drawer -->
+  <div class="mobile-nav">
+    <a href="index.html">🏠 首页</a>
+    <a href="archives.html">📚 归档</a>
+    <a href="categories.html">🗂️ 分类</a>
+    <a href="tags.html">🏷️ 标签</a>
+    <a href="about.html">👤 关于</a>
+  </div>
+
+  <!-- ===== SEARCH BAR ===== -->
+  <div class="search-wrapper">
+    <div class="search-container">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search-input" type="search" placeholder="搜索文章标题、标签…" autocomplete="off" />
+      </div>
+    </div>
+    <div class="search-results" id="search-results-container"></div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container">
+      <img
+        class="hero-avatar"
+        src="https://avatars.githubusercontent.com/u/0?s=150"
+        alt="Eternity 的头像"
+        width="110" height="110"
+      />
+      <h1 class="hero-name">Eternity</h1>
+      <p class="hero-subtitle">热爱技术，享受编码的乐趣</p>
+    </div>
+  </section>
+
+  <!-- ===== STATS BAR ===== -->
+  <div class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number" id="stat-posts">4</div>
+        <div class="stat-label">文章数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="stat-categories">3</div>
+        <div class="stat-label">分类数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="stat-tags">—</div>
+        <div class="stat-label">标签数</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number" id="stat-days">—</div>
+        <div class="stat-label">运行天数</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+    <div class="container">
+      <h2 class="section-title">最新文章</h2>
+
+      <!-- Article cards are rendered here -->
+      <div class="posts-grid" id="posts-grid">
+        <!-- Populated by inline script below -->
+      </div>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/eternityman" target="_blank" rel="noopener">GitHub</a>
+        <a href="archives.html">归档</a>
+        <a href="about.html">关于</a>
+      </div>
+      <p class="footer-copy">© 2026 EternityBlog · 热爱技术，享受编码的乐趣</p>
+    </div>
+  </footer>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button id="back-to-top" aria-label="回到顶部">↑</button>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="js/posts.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/router.js"></script>
+
+  <!-- Render post cards inline (no server needed) -->
+  <script>
+    (function renderCards() {
+      const grid = document.getElementById("posts-grid");
+      if (!grid || typeof posts === "undefined") return;
+
+      grid.innerHTML = posts
+        .slice()
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .map(p => `
+          <article class="post-card fade-in" onclick="location.href='post.html?id=${p.id}'">
+            <span class="card-category">${p.category}</span>
+            <h2 class="card-title">${p.title}</h2>
+            <p class="card-excerpt">${p.excerpt}</p>
+            <div class="card-footer">
+              <div class="card-meta">
+                <span>📅 ${p.date}</span>
+                <span>⏱️ ${p.readTime} 分钟</span>
+              </div>
+              <div class="card-tags">
+                ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+              </div>
+            </div>
+          </article>
+        `).join("");
+    })();
+  </script>
+
+</body>
+</html>

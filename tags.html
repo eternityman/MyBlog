@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EternityBlog 文章标签" />
+  <title>标签 - EternityBlog</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="container">
+      <a class="nav-brand" href="index.html">✨ EternityBlog</a>
+
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="archives.html">归档</a>
+        <a href="categories.html">分类</a>
+        <a href="tags.html" class="active">标签</a>
+        <a href="about.html">关于</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="search-toggle" class="btn-icon" title="搜索" aria-label="搜索">🔍</button>
+        <button id="theme-toggle" class="btn-icon" title="切换主题" aria-label="切换主题">🌙</button>
+        <button class="hamburger" aria-label="菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile navigation drawer -->
+  <div class="mobile-nav">
+    <a href="index.html">🏠 首页</a>
+    <a href="archives.html">📚 归档</a>
+    <a href="categories.html">🗂️ 分类</a>
+    <a href="tags.html">🏷️ 标签</a>
+    <a href="about.html">👤 关于</a>
+  </div>
+
+  <!-- ===== SEARCH BAR ===== -->
+  <div class="search-wrapper">
+    <div class="search-container">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search-input" type="search" placeholder="搜索文章标题、标签…" autocomplete="off" />
+      </div>
+    </div>
+    <div class="search-results" id="search-results-container"></div>
+  </div>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <div class="page-header">
+    <div class="container">
+      <h1 class="page-title">🏷️ 标签</h1>
+      <p class="page-subtitle">通过标签发现相关文章</p>
+    </div>
+  </div>
+
+  <!-- ===== TAGS CONTENT ===== -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Tag cloud (populated by router.js) -->
+      <div class="tag-cloud-section fade-in">
+        <div class="tag-cloud-title">所有标签</div>
+        <div class="tag-cloud" id="tag-cloud"></div>
+      </div>
+
+      <!-- Posts for selected tag (populated by router.js) -->
+      <div class="category-posts-section" id="tag-posts-section"></div>
+
+    </div>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/eternityman" target="_blank" rel="noopener">GitHub</a>
+        <a href="archives.html">归档</a>
+        <a href="about.html">关于</a>
+      </div>
+      <p class="footer-copy">© 2026 EternityBlog · 热爱技术，享受编码的乐趣</p>
+    </div>
+  </footer>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button id="back-to-top" aria-label="回到顶部">↑</button>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="js/posts.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/router.js"></script>
+
+</body>
+</html>
