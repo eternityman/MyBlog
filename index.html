@@ -162,6 +162,13 @@
           </article>
         `}).join("");
     })();
+
+    // Trigger fade-in animations after cards are rendered
+    setTimeout(function() {
+      document.querySelectorAll(".posts-grid .fade-in").forEach(function(el) {
+        el.classList.add("visible");
+      });
+    }, 100);
   </script>
 
 </body>
