@@ -309,12 +309,16 @@ function initCustomThemeColors() {
     document.head.appendChild(style);
   }
 
+  // Only allow CSS custom property names (--*) and safe color values
+  function isValidProp(key) { return /^--[a-zA-Z0-9-]+$/.test(key); }
+  function sanitizeValue(val) { return String(val).replace(/[{}<>;]/g, ""); }
+
   var css = "";
 
   if (blogConfig.lightTheme && Object.keys(blogConfig.lightTheme).length) {
     css += ":root {\n";
     for (var key in blogConfig.lightTheme) {
-      css += "  " + key + ": " + blogConfig.lightTheme[key] + ";\n";
+      if (isValidProp(key)) css += "  " + key + ": " + sanitizeValue(blogConfig.lightTheme[key]) + ";\n";
     }
     css += "}\n";
   }
@@ -322,7 +326,7 @@ function initCustomThemeColors() {
   if (blogConfig.darkTheme && Object.keys(blogConfig.darkTheme).length) {
     css += '[data-theme="dark"] {\n';
     for (var key in blogConfig.darkTheme) {
-      css += "  " + key + ": " + blogConfig.darkTheme[key] + ";\n";
+      if (isValidProp(key)) css += "  " + key + ": " + sanitizeValue(blogConfig.darkTheme[key]) + ";\n";
     }
     css += "}\n";
   }
