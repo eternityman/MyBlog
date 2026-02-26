@@ -51,5 +51,15 @@ const blogConfig = {
   /**
    * Floating animation speed range in seconds [min, max].
    */
-  floatingDuration: [8, 18]
+  floatingDuration: [8, 18],
+
+  /**
+   * Floating item opacity range [min, max] (0 to 1).
+   */
+  floatingOpacity: [0.15, 0.5],
+
+  /**
+   * Interval in milliseconds between spawning new floating items.
+   */
+  floatingSpawnInterval: 2000
 };

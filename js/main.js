@@ -301,6 +301,8 @@ function initFloatingEffects() {
 
   const maxCount = blogConfig.floatingMaxCount || 15;
   const [minDur, maxDur] = blogConfig.floatingDuration || [8, 18];
+  const [minOpacity, maxOpacity] = blogConfig.floatingOpacity || [0.15, 0.5];
+  const spawnInterval = blogConfig.floatingSpawnInterval || 2000;
 
   function createFloatingItem() {
     if (container.children.length >= maxCount) return;
@@ -329,7 +331,7 @@ function initFloatingEffects() {
     el.style.setProperty("--float-duration", duration + "s");
     el.style.setProperty("--float-start-x", startX + "vw");
     el.style.setProperty("--float-drift", drift + "vw");
-    el.style.opacity = (0.15 + Math.random() * 0.35).toFixed(2);
+    el.style.opacity = (minOpacity + Math.random() * (maxOpacity - minOpacity)).toFixed(2);
 
     container.appendChild(el);
 
@@ -344,7 +346,7 @@ function initFloatingEffects() {
   }
 
   // Continuously spawn
-  setInterval(createFloatingItem, 2000);
+  setInterval(createFloatingItem, spawnInterval);
 }
 
 /* ── Init ──────────────────────────────────── */
