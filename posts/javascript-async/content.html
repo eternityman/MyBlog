@@ -1,0 +1,106 @@
+<h2>为什么需要异步编程？</h2>
+<p>JavaScript 是单线程语言，一次只能执行一个任务。如果某个操作（如网络请求、读取文件）需要很长时间，会阻塞整个线程，导致页面卡死。<strong>异步编程</strong>允许我们在等待耗时操作的同时继续执行其他代码，极大地提升了程序的响应性和效率。</p>
+
+<h2>阶段一：回调函数 (Callback)</h2>
+<p>最原始的异步处理方式就是回调函数——将函数作为参数传入，在操作完成后调用它。</p>
+<pre><code class="language-javascript">function fetchData(url, callback) {
+  setTimeout(() => {
+    const data = { id: 1, name: "Eternity" };
+    callback(null, data);
+  }, 1000);
+}
+
+fetchData("/api/user", function(err, data) {
+  if (err) {
+    console.error("Error:", err);
+    return;
+  }
+  console.log("Got data:", data);
+});</code></pre>
+
+<p>回调函数的问题在于，当多个异步操作依次执行时，会产生臭名昭著的<strong>回调地狱 (Callback Hell)</strong>：</p>
+<pre><code class="language-javascript">// 回调地狱：难以阅读和维护
+fetchUser(id, function(err, user) {
+  fetchOrders(user.id, function(err, orders) {
+    fetchOrderDetail(orders[0].id, function(err, detail) {
+      // 越来越深...
+      console.log(detail);
+    });
+  });
+});</code></pre>
+
+<h2>阶段二：Promise</h2>
+<p>ES6 引入的 <code>Promise</code> 是对异步操作的封装，代表一个最终会完成（或失败）的异步操作。Promise 有三种状态：<code>pending</code>（进行中）、<code>fulfilled</code>（已成功）、<code>rejected</code>（已失败）。</p>
+<pre><code class="language-javascript">function fetchUser(id) {
+  return new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      if (id &gt; 0) {
+        resolve({ id, name: "Eternity" });
+      } else {
+        reject(new Error("Invalid ID"));
+      }
+    }, 1000);
+  });
+}
+
+// 链式调用，解决了回调地狱
+fetchUser(1)
+  .then(user =&gt; fetchOrders(user.id))
+  .then(orders =&gt; fetchOrderDetail(orders[0].id))
+  .then(detail =&gt; console.log(detail))
+  .catch(err =&gt; console.error("Error:", err))
+  .finally(() =&gt; console.log("Done!"));</code></pre>
+
+<h3>Promise 的常用静态方法</h3>
+<ul>
+  <li><code>Promise.all()</code>：并发执行多个 Promise，全部成功才 resolve，任一失败即 reject。</li>
+  <li><code>Promise.allSettled()</code>：等待所有 Promise 结束，无论成功或失败，返回每个结果的状态。</li>
+  <li><code>Promise.race()</code>：哪个 Promise 最先有结果（成功或失败），就以那个结果为准。</li>
+  <li><code>Promise.any()</code>：任意一个成功即 resolve；全部失败才 reject。</li>
+</ul>
+<pre><code class="language-javascript">// 并发请求，节省时间
+const [user, config] = await Promise.all([
+  fetchUser(1),
+  fetchConfig()
+]);</code></pre>
+
+<h2>阶段三：async / await</h2>
+<p>ES2017 引入的 <code>async/await</code> 是基于 Promise 的语法糖，让异步代码看起来像同步代码，极大地提升了可读性。</p>
+<pre><code class="language-javascript">async function loadUserData(id) {
+  try {
+    // await 暂停执行，等待 Promise resolve
+    const user = await fetchUser(id);
+    const orders = await fetchOrders(user.id);
+    const detail = await fetchOrderDetail(orders[0].id);
+    return detail;
+  } catch (err) {
+    // 统一的错误处理
+    console.error("Failed to load:", err.message);
+    throw err;
+  }
+}
+
+// 调用 async 函数
+loadUserData(1).then(data =&gt; console.log(data));</code></pre>
+
+<h3>常见陷阱：在循环中使用 await</h3>
+<p>在 <code>for</code> 循环中使用 <code>await</code> 会串行执行，而不是并行，可能造成性能问题：</p>
+<pre><code class="language-javascript">// ❌ 串行执行，慢（总时间 = 各请求时间之和）
+for (const id of ids) {
+  const data = await fetchData(id);
+  results.push(data);
+}
+
+// ✅ 并行执行，快（总时间 ≈ 最慢那个请求的时间）
+const results = await Promise.all(ids.map(id =&gt; fetchData(id)));</code></pre>
+
+<h2>Event Loop 机制</h2>
+<p>理解异步编程的底层原理，需要了解 JavaScript 的<strong>事件循环 (Event Loop)</strong>。JS 引擎维护着一个调用栈和一个任务队列（宏任务队列 + 微任务队列）。</p>
+<ul>
+  <li><strong>宏任务 (Macrotask)</strong>：setTimeout、setInterval、I/O 回调等。</li>
+  <li><strong>微任务 (Microtask)</strong>：Promise.then/catch/finally 回调、queueMicrotask 等。</li>
+</ul>
+<p>每次宏任务执行完毕后，JS 引擎会清空所有微任务队列，再执行下一个宏任务。这就是 Promise 回调总比 setTimeout 优先执行的原因。</p>
+
+<h2>总结</h2>
+<p>JavaScript 异步编程的演进路径：<strong>Callback → Promise → async/await</strong>，每一步都是对前一步痛点的解决。在现代开发中，推荐优先使用 <code>async/await</code>，配合 <code>Promise.all</code> 处理并发场景，让代码既简洁又高效。</p>
