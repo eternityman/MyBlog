@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EternityBlog 文章详情" />
+  <title>文章 - EternityBlog</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- highlight.js (vendored locally) -->
+  <link rel="stylesheet" href="assets/vendor/atom-one-dark.min.css" />
+</head>
+<body>
+
+  <!-- Reading progress bar -->
+  <div id="progress-bar"></div>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="container">
+      <a class="nav-brand" href="index.html">✨ EternityBlog</a>
+
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="archives.html">归档</a>
+        <a href="categories.html">分类</a>
+        <a href="tags.html">标签</a>
+        <a href="about.html">关于</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="search-toggle" class="btn-icon" title="搜索" aria-label="搜索">🔍</button>
+        <button id="theme-toggle" class="btn-icon" title="切换主题" aria-label="切换主题">🌙</button>
+        <button class="hamburger" aria-label="菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile navigation drawer -->
+  <div class="mobile-nav">
+    <a href="index.html">🏠 首页</a>
+    <a href="archives.html">📚 归档</a>
+    <a href="categories.html">🗂️ 分类</a>
+    <a href="tags.html">🏷️ 标签</a>
+    <a href="about.html">👤 关于</a>
+  </div>
+
+  <!-- ===== SEARCH BAR ===== -->
+  <div class="search-wrapper">
+    <div class="search-container">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search-input" type="search" placeholder="搜索文章标题、标签…" autocomplete="off" />
+      </div>
+    </div>
+    <div class="search-results" id="search-results-container"></div>
+  </div>
+
+  <!-- ===== POST PAGE ===== -->
+  <div class="post-page">
+    <div class="container">
+      <div class="post-layout">
+
+        <!-- Main article column -->
+        <main>
+          <!-- Post header (populated by router.js) -->
+          <header class="post-header" id="post-header"></header>
+
+          <!-- Article body (populated by router.js) -->
+          <article class="article-content" id="post-content"></article>
+
+          <!-- Prev / Next navigation (populated by router.js) -->
+          <nav class="post-nav" id="post-nav"></nav>
+        </main>
+
+        <!-- TOC sidebar -->
+        <aside class="toc-sidebar">
+          <div class="toc-card">
+            <div class="toc-title">目录</div>
+            <nav class="toc-list" id="toc-list"></nav>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/eternityman" target="_blank" rel="noopener">GitHub</a>
+        <a href="archives.html">归档</a>
+        <a href="about.html">关于</a>
+      </div>
+      <p class="footer-copy">© 2026 EternityBlog · 热爱技术，享受编码的乐趣</p>
+    </div>
+  </footer>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button id="back-to-top" aria-label="回到顶部">↑</button>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="assets/vendor/highlight.min.js"></script>
+  <script src="js/posts.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/router.js"></script>
+
+</body>
+</html>

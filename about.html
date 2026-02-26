@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="关于 Eternity - EternityBlog" />
+  <title>关于 - EternityBlog</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar">
+    <div class="container">
+      <a class="nav-brand" href="index.html">✨ EternityBlog</a>
+
+      <div class="nav-links">
+        <a href="index.html">首页</a>
+        <a href="archives.html">归档</a>
+        <a href="categories.html">分类</a>
+        <a href="tags.html">标签</a>
+        <a href="about.html" class="active">关于</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="search-toggle" class="btn-icon" title="搜索" aria-label="搜索">🔍</button>
+        <button id="theme-toggle" class="btn-icon" title="切换主题" aria-label="切换主题">🌙</button>
+        <button class="hamburger" aria-label="菜单">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile navigation drawer -->
+  <div class="mobile-nav">
+    <a href="index.html">🏠 首页</a>
+    <a href="archives.html">📚 归档</a>
+    <a href="categories.html">🗂️ 分类</a>
+    <a href="tags.html">🏷️ 标签</a>
+    <a href="about.html">👤 关于</a>
+  </div>
+
+  <!-- ===== SEARCH BAR ===== -->
+  <div class="search-wrapper">
+    <div class="search-container">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input id="search-input" type="search" placeholder="搜索文章标题、标签…" autocomplete="off" />
+      </div>
+    </div>
+    <div class="search-results" id="search-results-container"></div>
+  </div>
+
+  <!-- ===== ABOUT PAGE ===== -->
+  <div class="about-page">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- ── Sidebar ── -->
+        <aside class="about-sidebar fade-in">
+          <img
+            class="about-avatar"
+            src="https://avatars.githubusercontent.com/u/0?s=200"
+            alt="Eternity 的头像"
+            width="140" height="140"
+          />
+          <h1 class="about-name">Eternity</h1>
+          <p class="about-tagline">前端开发者 · 技术博主</p>
+
+          <div class="about-socials">
+            <a class="social-link" href="https://github.com/eternityman" target="_blank" rel="noopener">
+              🐙 GitHub
+            </a>
+            <a class="social-link" href="mailto:hello@eternityman.dev">
+              📧 Email
+            </a>
+          </div>
+        </aside>
+
+        <!-- ── Main content ── -->
+        <div class="about-content">
+
+          <!-- Introduction -->
+          <section class="about-section fade-in">
+            <h2 class="about-section-title">👋 关于我</h2>
+            <p class="about-intro">
+              嗨，我是 <strong>Eternity</strong>，一名热爱技术的前端开发者，目前专注于 Web 前端领域，对 JavaScript 生态、现代框架和开发体验优化有浓厚兴趣。
+            </p>
+            <p class="about-intro" style="margin-top:14px">
+              我相信<em>分享是最好的学习方式</em>。在这个博客里，我会持续分享技术学习心得、项目踩坑记录以及对前端趋势的思考。如果你从我的文章中获得了帮助，那将是我最大的动力！
+            </p>
+            <p class="about-intro" style="margin-top:14px">
+              平时除了写代码，我还喜欢打羽毛球、听播客，以及时不时尝试做一顿好吃的饭 🍜。
+            </p>
+          </section>
+
+          <!-- Skills -->
+          <section class="about-section fade-in">
+            <h2 class="about-section-title">🛠️ 技术栈</h2>
+            <div class="skills-list">
+
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">JavaScript / TypeScript</span>
+                  <span class="skill-pct">90%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" data-width="90"></div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">Vue.js</span>
+                  <span class="skill-pct">85%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" data-width="85"></div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">React</span>
+                  <span class="skill-pct">80%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" data-width="80"></div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">Node.js</span>
+                  <span class="skill-pct">75%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" data-width="75"></div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">CSS / SCSS</span>
+                  <span class="skill-pct">88%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" data-width="88"></div>
+                </div>
+              </div>
+
+              <div class="skill-item">
+                <div class="skill-header">
+                  <span class="skill-name">Git</span>
+                  <span class="skill-pct">82%</span>
+                </div>
+                <div class="skill-bar">
+                  <div class="skill-fill" data-width="82"></div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Projects -->
+          <section class="about-section fade-in">
+            <h2 class="about-section-title">🚀 项目</h2>
+            <div class="projects-list">
+
+              <div class="project-card">
+                <div class="project-name">EternityBlog</div>
+                <div class="project-desc">
+                  本博客网站。纯静态实现，无需服务端，支持亮/暗主题切换、全文搜索、文章归档、标签云等功能，通过 GitHub Actions 自动部署至 GitHub Pages。
+                </div>
+                <div class="project-tech">
+                  <span class="tech-badge">HTML</span>
+                  <span class="tech-badge">CSS</span>
+                  <span class="tech-badge">JavaScript</span>
+                  <span class="tech-badge">GitHub Actions</span>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-name">Vue3 Dashboard Starter</div>
+                <div class="project-desc">
+                  基于 Vue 3 + Vite + Pinia 的后台管理系统模板，内置权限控制、动态路由、多语言支持和暗黑模式，开箱即用。
+                </div>
+                <div class="project-tech">
+                  <span class="tech-badge">Vue 3</span>
+                  <span class="tech-badge">Vite</span>
+                  <span class="tech-badge">Pinia</span>
+                  <span class="tech-badge">TypeScript</span>
+                </div>
+              </div>
+
+              <div class="project-card">
+                <div class="project-name">DevTools CLI</div>
+                <div class="project-desc">
+                  一个面向开发者的命令行工具集，集成了 JSON 格式化、Base64 编解码、时间戳转换、颜色值转换等日常开发中常用的小工具。
+                </div>
+                <div class="project-tech">
+                  <span class="tech-badge">Node.js</span>
+                  <span class="tech-badge">Commander.js</span>
+                  <span class="tech-badge">chalk</span>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Contact -->
+          <section class="about-section fade-in">
+            <h2 class="about-section-title">📬 联系我</h2>
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="contact-icon">🐙</div>
+                <div>
+                  <strong>GitHub</strong><br />
+                  <a href="https://github.com/eternityman" target="_blank" rel="noopener">github.com/eternityman</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div>
+                  <strong>Email</strong><br />
+                  <a href="mailto:hello@eternityman.dev">hello@eternityman.dev</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div><!-- /.about-content -->
+      </div><!-- /.about-grid -->
+    </div><!-- /.container -->
+  </div><!-- /.about-page -->
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="https://github.com/eternityman" target="_blank" rel="noopener">GitHub</a>
+        <a href="archives.html">归档</a>
+        <a href="about.html">关于</a>
+      </div>
+      <p class="footer-copy">© 2026 EternityBlog · 热爱技术，享受编码的乐趣</p>
+    </div>
+  </footer>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button id="back-to-top" aria-label="回到顶部">↑</button>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="js/main.js"></script>
+
+  <!-- Animate skill bars when they enter the viewport -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const fills = document.querySelectorAll(".skill-fill");
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.style.width = e.target.dataset.width + "%";
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      fills.forEach(f => observer.observe(f));
+    });
+  </script>
+
+</body>
+</html>
